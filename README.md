@@ -1,9 +1,9 @@
 
 <div align="center">
-  <h1>[Reflective LLaVA (ReflectiVA)](https://arxiv.org/abs/2411.16863)</h1>
-  <h2>[Augmenting Multimodal LLMs with Self-Reflective Tokens for Knowledge-based Visual Question Answering
+  <h1>Reflective LLaVA (ReflectiVA)</h1>
+  <h2>Augmenting Multimodal LLMs with Self-Reflective Tokens for Knowledge-based Visual Question Answering
 
-  (arXiv 2024)](https://arxiv.org/abs/2411.16863)
+  (arXiv 2024)
   </h2>
    
 </div>
