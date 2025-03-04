@@ -3,7 +3,7 @@
   <h1>Reflective LLaVA (ReflectiVA)</h1>
   <h2>Augmenting Multimodal LLMs with Self-Reflective Tokens for Knowledge-based Visual Question Answering
 
-  (arXiv 2024)
+  (CVPR 2025)
   </h2>
    
 </div>
