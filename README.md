@@ -29,11 +29,11 @@ This repository contains the reference code for the paper [Augmenting Multimodal
 
 Please cite with the following BibTeX:
 ```
-@article{cocchi2024augmenting,
+@inproceedings{cocchi2024augmenting,
   title={{Augmenting Multimodal LLMs with Self-Reflective Tokens for Knowledge-based Visual Question Answering}},
   author={Cocchi, Federico and Moratelli, Nicholas and Cornia, Marcella and Baraldi, Lorenzo and Cucchiara, Rita},
-  journal={arXiv},
-  year={2024}
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2025}
 }
 ```
 
