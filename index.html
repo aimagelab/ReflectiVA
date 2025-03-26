@@ -4,10 +4,1020 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReflectiVA</title>
+    <title>ReflectiVA (CVPR 2025)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Quicksand:wght@300;400;500;600;700&family=Exo+2:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+        <style>
+            :root {
+                --primary-color: #2c3e50;
+                --secondary-color: #3498db;
+                --accent-color: #e74c3c;
+                --light-bg: #f8f9fa;
+                --gradient-1: #6a11cb;
+                --gradient-2: #2575fc;
+                --gradient-3: #ff416c;
+                --gradient-4: #ff4b2b;
+            }
+    
+            body {
+                font-family: 'Quicksand', sans-serif;
+                color: var(--primary-color);
+            }
+    
+            .hero-section {
+                background: linear-gradient(45deg, var(--gradient-1), var(--gradient-2), var(--gradient-3), var(--gradient-4));
+                background-size: 400% 400%;
+                animation: gradient-animation 15s ease infinite;
+                color: white;
+                padding: 2.5rem 0;
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            }
+            @media (max-width: 768px) {
+                /* Responsive BibTeX section */
+                .citation-box {
+                    padding: 1rem;
+                    font-size: 0.7rem;
+                    overflow-x: auto;
+                }
+    
+                .citation-box pre {
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                    max-width: 100%;
+                    overflow-x: auto;
+                }
+    
+                /* Move project logo above title on mobile */
+                .main-title-container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+    
+                .project-logo {
+                    margin-bottom: 1rem;
+                    margin-right: 0;
+                    max-width: 120px; /* Adjust size for mobile */
+                }
+    
+                .main-title {
+                    text-align: center;
+                    font-size: 1.8rem;
+                }
+    
+                /* Adjust author badges for mobile */
+                .authors-row {
+                    flex-direction: column;
+                    align-items: center;
+                }
+    
+                .author-badge {
+                    margin: 0.25rem 0;
+                }
+            }
+            @keyframes gradient-animation {
+                0% {
+                    background-position: 0% 50%;
+                }
+    
+                50% {
+                    background-position: 100% 50%;
+                }
+    
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+    
+            .hero-section::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000'%3E%3Cdefs%3E%3Cstyle%3Ecircle %7B fill: %23ffffff; fill-opacity: 0.15; %7D%3C/style%3E%3C/defs%3E%3Cg%3E%3Ccircle cx='300' cy='200' r='80'/%3E%3Ccircle cx='800' cy='400' r='60'/%3E%3Ccircle cx='150' cy='600' r='40'/%3E%3Ccircle cx='700' cy='700' r='100'/%3E%3Ccircle cx='450' cy='300' r='30'/%3E%3Ccircle cx='600' cy='150' r='50'/%3E%3Ccircle cx='250' cy='850' r='70'/%3E%3Ccircle cx='900' cy='200' r='45'/%3E%3C/g%3E%3C/svg%3E");
+                opacity: 0.3;
+            }
+    
+            .hero-particles {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+    
+            .particle {
+                position: absolute;
+                display: block;
+                pointer-events: none;
+                background-color: rgba(255, 255, 255, 0.5);
+                border-radius: 50%;
+                animation: float 15s infinite ease-in-out;
+            }
+    
+            @keyframes float {
+    
+                0%,
+                100% {
+                    transform: translateY(0) translateX(0);
+                }
+    
+                25% {
+                    transform: translateY(-30px) translateX(30px);
+                }
+    
+                50% {
+                    transform: translateY(-10px) translateX(10px);
+                }
+    
+                75% {
+                    transform: translateY(-20px) translateX(-20px);
+                }
+            }
+    
+            .resources-section {
+                margin-top: 2rem !important;
+            }
+    
+            .resources-section h5 {
+                margin-bottom: 0.5rem;
+            }
+    
+            .title-container {
+                position: relative;
+                z-index: 10;
+                backdrop-filter: blur(5px);
+                background-color: rgba(0, 0, 0, 0.1);
+                border-radius: 20px;
+                padding: 1.5rem;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                transform: perspective(1000px) rotateX(0deg);
+                transition: transform 0.5s;
+            }
+    
+            .title-container:hover {
+                transform: perspective(1000px) rotateX(2deg);
+            }
+    
+            .cvpr-logo {
+                max-width: 400px;
+                width: 100%; /* Make the logo responsive */
+                height: auto; /* Maintain aspect ratio */
+                margin-bottom: 1rem;
+                filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+                transition: transform 0.3s;
+            }
+            
+            .cvpr-logo:hover {
+                transform: scale(1.05);
+            }
+            
+            @media (max-width: 768px) {
+                .cvpr-logo, .project-logo {
+                    max-width: 200px; /* Imposta entrambi i loghi alla stessa larghezza massima */
+                    height: auto; /* Mantiene le proporzioni */
+                    margin-bottom: 1rem;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .cvpr-logo, .project-logo {
+                    max-width: 150px; /* Dimensione leggermente ridotta per schermi molto piccoli */
+                    height: auto;
+                    margin-bottom: 1rem;
+                }
+            }
+
+    
+            .project-logo {
+                max-width: 150px;
+                margin-right: 20px;
+                filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+                vertical-align: middle;
+            }
+            
+            .main-title-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+    
+            .main-title {
+                margin-bottom: 0;
+            }
+    
+            .main-title {
+                font-family: 'Merriweather', serif;
+                font-weight: 700;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                background: linear-gradient(to right, #ffffff, #dcdcdc);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin-bottom: 1rem;
+                font-size: 2.5rem;
+            }
+    
+            .title-caption {
+                font-family: 'Merriweather', serif;
+                font-weight: 300;
+                font-style: italic;
+                letter-spacing: 1px;
+                margin-bottom: 2rem;
+                opacity: 0.9;
+            }
+    
+            .author-photo {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-right: 8px;
+                border: 2px solid rgba(255, 255, 255, 0.5);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+            }
+    
+            .author-badge {
+                display: flex;
+                align-items: center;
+                padding: 0.5rem 1rem;
+                margin: 0.35rem;
+                border-radius: 50px;
+                background-color: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                color: white;
+                transition: all 0.3s;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                font-family: 'Lato', sans-serif;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+    
+            .author-badge:hover .author-photo {
+                transform: scale(1.1);
+                border-color: white;
+            }
+    
+            .equal-contrib {
+                font-size: 0.8rem;
+                vertical-align: super;
+                margin-left: 2px;
+            }
+    
+            .equal-contrib-note {
+                font-size: 0.85rem;
+                margin-top: 0.25rem;
+                opacity: 0.8;
+            }
+    
+            .cvpr-year {
+                font-family: 'Orbitron', sans-serif;
+                font-weight: 700;
+                letter-spacing: 8px;
+                margin-top: 1rem;
+                text-transform: uppercase;
+                position: relative;
+                display: inline-block;
+                padding: 0.5rem 2rem;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 5px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+    
+            .section-title {
+                font-family: 'Merriweather', serif;
+                text-transform: uppercase;
+                position: relative;
+                margin-bottom: 2rem;
+                padding-bottom: 1rem;
+                font-weight: 800;
+                display: inline-block;
+                color: var(--primary-color);
+                letter-spacing: 3px;
+            }
+            
+            .section-title::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                background-color: var(--primary-color);
+                border-radius: 3px;
+            }
+            
+            .section-title::after {
+                position: absolute;
+                bottom: -15px;
+                left: 0;
+                color: var(--primary-color);
+                font-size: 1.2rem;
+                opacity: 0.7;
+            }
+    
+            .abstract-box {
+                background-color: var(--light-bg);
+                border-left: 4px solid var(--secondary-color);
+                border-radius: 0 15px 15px 0;
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+                position: relative;
+                overflow: hidden;
+            }
+    
+            .abstract-box::before {
+                content: "";
+                position: absolute;
+                top: -20px;
+                left: 10px;
+                font-size: 150px;
+                color: rgba(0, 0, 0, 0.03);
+                font-family: serif;
+            }
+    
+            .section-abstract {
+                position: relative;
+                padding: 3rem 0;
+                background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            }
+    
+            .section-abstract::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            }
+    
+            .section-experiments {
+                position: relative;
+                padding: 4rem 0;
+                background: linear-gradient(135deg, #f6f9fc, #eef2f7);
+                overflow: hidden;
+            }
+    
+            .section-experiments::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232c3e50' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+                opacity: 0.5;
+            }
+    
+            .section-experiments {
+                padding-top: 1rem !important;
+            }
+    
+            .experimental-details-container {
+                margin-bottom: 1rem;
+            }
+            .section-experiments .experimental-details-container {
+                margin-top: -6rem;
+            }
+            
+            .section-experiments .additional-exp-info {
+                margin-top: 0.5rem !important;
+            }
+            .experiment-card {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+    
+            .section-experiments .row {
+                margin-left: 0;
+                margin-right: 0;
+            }
+    
+            .section-experiments .row > [class*='col-'] {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+    
+            .section-experiments .experiment-card {
+                width: 100%;
+                height: 100%;
+                
+                display: flex;
+                flex-direction: column;
+            }
+    
+            .experiment-card:hover {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            }
+    
+            .experiment-card .card-body {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+            }
+    
+            .experiment-card .card-text {
+                flex-grow: 1;
+            }
+    
+            section+section {
+                margin-top: -1rem;
+            }
+    
+            .additional-exp-info {
+                margin-top: 1.5rem !important;
+                padding: 1.5rem !important;
+            }
+    
+            .section-experiments .experimental-details-container {
+                margin-bottom: 1.5rem;
+            }
+    
+            .horizontal-image-section {
+                padding: 2rem 0 !important;
+            }
+    
+            section {
+                padding: 2.5rem 0 !important;
+            }
+    
+            .section-abstract,
+            .section-method,
+            .section-experiments,
+            .section-citation,
+            .section-conclusion {
+                padding: 2.5rem 0 !important;
+            }
+    
+            .section-abstract .container,
+            .section-method .container,
+            .section-experiments .container,
+            .section-citation .container,
+            .section-conclusion .container {
+                max-width: 1300px;
+                margin-left: auto;
+                margin-right: auto;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+    
+            .horizontal-image-section .container {
+                max-width: 1300px;
+                margin-left: auto;
+                margin-right: auto;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+    
+            .experiment-card .card-title {
+                font-family: 'Exo 2', sans-serif;
+                font-weight: 700;
+                color: var(--primary-color);
+                position: relative;
+                padding-bottom: 0.8rem;
+                margin-bottom: 0.75rem;
+            }
+    
+            .experiment-card .card-title::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 40px;
+                height: 3px;
+                background-color: var(--accent-color);
+                border-radius: 3px;
+            }
+    
+            .section-citation {
+                position: relative;
+                padding: 4rem 0;
+                background: linear-gradient(to bottom, #ffffff, #f0f3f6);
+            }
+    
+            .citation-box {
+                background-color: white;
+                border-radius: 15px;
+                padding: 2rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+                font-family: monospace;
+                font-size: 0.9rem;
+                position: relative;
+                border: 1px solid rgba(0, 0, 0, 0.05);
+                text-align: center;
+            }
+    
+            .citation-box pre {
+                display: inline-block;
+                text-align: left;
+                margin: 0 auto;
+            }
+    
+            .citation-box::before {
+                content: "";
+                position: absolute;
+                top: -15px;
+                left: 20px;
+                background: white;
+                padding: 0 10px;
+                color: var(--secondary-color);
+                font-weight: bold;
+                font-family: 'Exo 2', sans-serif;
+            }
+    
+            .copy-button {
+                cursor: pointer;
+                color: var(--secondary-color);
+                transition: all 0.3s;
+            }
+    
+            .copy-button:hover {
+                color: var(--accent-color);
+                transform: scale(1.2);
+            }
+    
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.8s ease-out;
+            }
+    
+            .animate-on-scroll.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+    
+            .horizontal-image-container img {
+                max-width: 80%;
+                transition: transform 0.3s;
+            }
+    
+            .horizontal-image-container .caption-text {
+                max-width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+    
+            .author-badge a {
+                text-decoration: none;
+                color: white;
+            }
+            .author-badge a:hover {
+                text-decoration: underline;
+            }
+    
+            .authors-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+    
+            .authors-row {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+            }
+    
+            .consistent-container {
+                max-width: 1500px;
+                margin-left: auto;
+                margin-right: auto;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        </style>
 </head>
 
 <body>
+    <section class="hero-section text-center">
+        <div class="hero-particles">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="title-container">
+                        <img src="static/paper/cvpr2025.png" alt="CVPR Logo" class="cvpr-logo">
+
+                        <div class="main-title-container">
+                            <img src="static/paper//logoReflectiVA.png" alt="ReflectiVA Logo" class="project-logo">
+                            <h1 class="main-title">Augmenting Multimodal LLMs with <br>
+                                Self-Reflective Tokens for Knowledge-based <br>
+                                Visual Question Answering</h1>
+                        </div>
+                        <div class="authors-container">
+                            <div class="authors-row">
+                                <span class="author-badge me-2">
+                                    <img src="static/authors/FedericoCocchi.jpg" alt="Federico Cocchi" class="author-photo">
+                                    <a href="https://federico1-creator.github.io/Federico_Cocchi/" target="_blank">
+                                    Federico Cocchi</a> <span class="equal-contrib">*</span>
+                                </span>
+                                <span class="author-badge">
+                                    <img src="static/authors/NicholasMoratelli.png" alt="Nicholas Moratelli" class="author-photo">
+                                    <a href="https://nicholasmoratelli.github.io/" target="_blank">
+                                    Nicholas Moratelli</a> <span class="equal-contrib">*</span>
+                                </span>
+                            </div>
+                            <div class="authors-row">
+                                <span class="author-badge me-2">
+                                    <img src="static/authors/MarcellaCornia.png" alt="Marcella Cornia" class="author-photo">
+                                    <a href="https://personale.unimore.it/rubrica/dettaglio/marcella.cornia" target="_blank">
+                                    Marcella Cornia</a>
+                                </span>
+                                <span class="author-badge me-2">
+                                    <img src="static/authors/LorenzoBaraldi.png" alt="Lorenzo Baraldi" class="author-photo">
+                                    <a href="https://www.lorenzobaraldi.com" target="_blank">
+                                    Lorenzo Baraldi</a>
+                                </span>
+                                <span class="author-badge">
+                                    <img src="static/authors/RitaCucchiara.png" alt="Rita Cucchiara" class="author-photo">
+                                    <a href="https://personale.unimore.it/rubrica/dettaglio/cucchiara" target="_blank">
+                                    Rita Cucchiara</a>
+                                </span>
+                            </div>
+                        </div>
+                        <p class="equal-contrib-note">* Equal contribution</p>
+                        <p class="cvpr-year mt-4">CVPR 2025</p>
+                    </div>
+
+                    <div class="resources-section mt-4 text-center animate-on-scroll">
+                        <h5
+                            style="font-family: 'Exo 2', sans-serif; font-weight: 700; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                            Resources</h5>
+                        <div class="d-flex justify-content-center flex-wrap">
+                            <a href="https://github.com/aimagelab/ReflectiVA" class="btn btn-outline-light m-2"
+                                style="border-radius: 30px; transition: all 0.3s; backdrop-filter: blur(5px); background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.5);">
+                                <i class="fab fa-github me-2"></i>GitHub
+                            </a>
+                            <a href="https://arxiv.org/abs/2411.16863" class="btn btn-outline-light m-2"
+                                style="border-radius: 30px; transition: all 0.3s; backdrop-filter: blur(5px); background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.5);">
+                                <i class="fas fa-file-pdf me-2"></i>Paper
+                            </a>
+                            <a href="https://huggingface.co/aimagelab/ReflectiVA" class="btn btn-outline-light m-2"
+                                style="border-radius: 30px; transition: all 0.3s; backdrop-filter: blur(5px); background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.5);">
+                                <i class="fa fa-link"></i> Model
+                            </a>
+                            <a href="https://huggingface.co/datasets/aimagelab/ReflectiVA-Data" class="btn btn-outline-light m-2"
+                                style="border-radius: 30px; transition: all 0.3s; backdrop-filter: blur(5px); background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.5);">
+                                <i class="fa fa-database"></i> Dataset
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-abstract py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 animate-on-scroll">
+                    <h2 class="section-title">Abstract</h2>
+                    <div class="abstract-box">
+                        <p>
+                            Multimodal LLMs (MLLMs) are the natural extension of large language models to handle
+                            multimodal inputs, combining text and image data. They have recently garnered attention due
+                            to their capability to address complex tasks involving both modalities. However, their
+                            effectiveness is limited to the knowledge acquired during training, which restricts their
+                            practical utility. In this work, we introduce a novel method to enhance the adaptability of
+                            MLLMs by integrating external knowledge sources. Our proposed model, Reflective LLaVA
+                            (ReflectiVA), utilizes reflective tokens to dynamically determine the need for external
+                            knowledge and predict the relevance of information retrieved from an external database.
+                            Tokens are trained following a two-stage two-model training recipe. This ultimately enables
+                            the MLLM to manage external knowledge while preserving fluency and performance on tasks
+                            where external knowledge is not needed. Through our experiments, we demonstrate the efficacy
+                            of Reflectiva for knowledge-based visual question answering, highlighting its superior
+                            performance compared to existing methods.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section-citation py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 animate-on-scroll">
+                    <h2 class="section-title">BibTeX</h2>
+                    <div class="citation-box position-relative">
+                        <i class="fas fa-copy position-absolute top-0 end-0 m-3 copy-button"
+                            title="Copia citazione"></i>
+                        <pre>@InProceedings{cocchi2024augmenting,
+    author    = {Cocchi, Federico and Moratelli, Nicholas and Cornia, Marcella and Baraldi, Lorenzo and Cucchiara, Rita},
+    title     = {{Augmenting Multimodal LLMs with Self-Reflective Tokens for Knowledge-based Visual Question Answering}},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+    year      = {2025}
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-method py-5"
+        style="background: linear-gradient(to bottom, #f0f3f6, #ffffff); position: relative; padding: 4rem 0; overflow: hidden;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 animate-on-scroll">
+                    <h2 class="section-title">Proposed Method</h2>
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 animate-on-scroll">
+                            <div class="method-box"
+                                style="background-color: white; border-radius: 15px; padding: 2rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); margin-bottom: 2rem; border-left: 4px solid var(--secondary-color);">
+                          
+                                <h2>Model Architecture</h2>
+        
+                                <p>Extend model vocabulary with special reflective tokens:</p>
+                                <ul>
+                                    <li><code>[RET]</code>: External knowledge retrieval needed</li>
+                                    <li><code>[NORET]</code>: No external knowledge required</li>
+                                    <li><code>[REL]</code>: Retrieved items are relevant</li>
+                                    <li><code>[NOREL]</code>: Retrieved items are irrelevant</li>
+                                </ul>
+       
+                                    <h3>Two-Stage Training Process</h3>
+                                    <ul>
+                                        <li>
+                                            <strong>Stage 1:</strong> In-Article Discriminator
+                                        </li>
+                                        <li>
+                                            <strong>Stage 2:</strong> Reflective Token Training
+                                        </li>
+                                    </ul>
+
+                        
+
+                                    <h3>Inference Time</h3>
+                                    <ol>
+                                        <li>
+                                            Assess need for external knowledge retrieval (emit <code>[RET]</code> or <code>[NORET]</code>)
+                                        </li>
+                                        <li>if <code>[RET]</code> then retrieve Wikipedia pages from external KB</li>
+                                        <ul>
+                                            <li>Chunk each page in <i>N</i> passages</li>
+                                            <li>
+                                                Classify relevance of each passage (mark with <code>[REL]</code> or <code>[NOREL]</code>)
+                                            </li>
+                                            <li>Generate answer using only <code>[REL]</code> passages</li>
+                                        </ul>
+                                        <li>if <code>[NORET]</code> then generate the answer</li>
+                                    </ol>
+  
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 animate-on-scroll">
+                            <div class="method-img text-center">
+                                <img src="static/paper/overview.png" alt="Architettura del Metodo"
+                                    class="img-fluid rounded shadow"
+                                    style="max-width: 100%; transition: transform 0.3s; border: 1px solid rgba(0,0,0,0.1);">
+                                <p class="mt-3 text-center" style="font-size: 0.9rem; font-style: italic; color: #666;">
+                                    Overview of ReflectiVA, which employs reflective tokens for knowledge-based visual
+                                    question answering. Our model learns to predict the need of retrieving data from an
+                                    external knowledge source (top), classifies the relevance of each retrieved item
+                                    (middle) and generate the final answer based on relevant items (bottom).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-experiments py-5">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-4 animate-on-scroll">
+                <div class="card experiment-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Performance on InfoSeek and Encyclopedic-VQA</h5>
+                        <p class="card-text">
+                            The ReflectiVA model outperforms competitors on both InfoSeek and Encyclopedic-VQA when external knowledge is incorporated to enrich the 
+                            generation pipeline. Specifically, we also evaluate various LLM and MLLM baselines in a zero-shot setting. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 animate-on-scroll">
+                <div class="card experiment-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Accuracy of Reflective Tokens</h5>
+                        <p class="card-text">
+                            The special tokens determine when to retrieve information and what to utilize during generation. Specifically, in the Encyclopedic-VQA task, <code>[REL]</code> and <code>[NOREL]</code> achieve accuracies of 94.6 and 95.9, respectively. 
+                            Meanwhile, the <code>[RET]</code> token is correctly predicted with an accuracy of 88.4.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 animate-on-scroll">
+                <div class="card experiment-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Preservation on Dataset w/o KB</h5>
+                        <p class="card-text">
+                        ReflectiVA preserves the performance on multimodal datasets that do not required external knowledge.
+                        Effectively demonstrate that our two-stage, two-model training strategy preserves the model's ability
+                        to answer open-ended and general visual-text questions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="section-experiments py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 animate-on-scroll">
+                    <h2 class="section-title">Experimental Results</h2>
+                </div>
+            </div>
+
+            <section class="horizontal-image-section py-5 mb-5" style="background-color: #ffffff;">
+                <div class="container">
+                    <div class="row justify-content-center animate-on-scroll">
+                        <div class="col-12">
+                            <div class="horizontal-image-container text-center">
+                                <img src="static/paper/table.png" alt="ReflectiVA" class="img-fluid rounded shadow">
+                                <p class="mt-3 text-center caption-text"
+                                    style="font-size: 0.9rem; font-style: italic; color: #666;">
+                                    VQA accuracy scores on the Encyclopedic-VQA test set and the InfoSeek validation
+                                    set, where all results from retrieval-augmented models are reported without
+                                    considering any re-ranking stage to reorder retrieved documents.
+                                    † indicates results that are not directly comparable due to different knowledge
+                                    bases, and the marker
+                                    ◈ represents our reproductions with different LLMs.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="section-experiments py-5">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-lg-12 animate-on-scroll experimental-details-container">
+                    <div class="additional-exp-info"
+                        style="background-color: var(--light-bg); border-radius: 15px; padding: 1.5rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);">
+                        <h5
+                            style="font-family: 'Exo 2', sans-serif; font-weight: 700; color: var(--primary-color); text-align: center;">
+                            Experimental Settings</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="exp-details p-3 text-center">
+                                    <h6><i class="fas fa-cogs me-2"
+                                            style="color: var(--secondary-color);"></i>Configuration</h6>
+                                    <ul class="small list-unstyled">
+                                        <li>Training on 16 NVIDIA A100 GPUs</li>
+                                        <li>Global Batch size of 128</li>
+                                        <li>AdamW Optimizer and a learning rate of  2e-5</li>
+                                        <li>The weights of both the MLP and LLM models are updated</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="exp-details p-3 text-center">
+                                    <h6><i class="fas fa-database me-2"
+                                            style="color: var(--secondary-color);"></i>Dataset</h6>
+                                    <ul class="small list-unstyled">
+                                        <li>Training data curated by In-Article Model</li>
+                                        <li>SoTA performance on InfoSeek and Encyclopedic-VQA</li>
+                                        <li>Performance preservation on standard MLLM benchmarks</li>
+                                        <li>Knowledge base: Wikipedia + Wikidata (updated at 2023)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-experiments py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 animate-on-scroll">
+                    <h2 class="section-title">Qualitative Results</h2>
+                </div>
+            </div>
+
+            <section class="horizontal-image-section py-5 mb-5" style="background-color: #ffffff;">
+                <div class="container">
+                    <div class="row justify-content-center animate-on-scroll">
+                        <div class="col-12">
+                            <div class="horizontal-image-container text-center">
+                                <img src="static/paper/qualitative.png" alt="ReflectiVA" class="img-fluid rounded shadow">
+                                <p class="mt-3 text-center caption-text"
+                                    style="font-size: 0.9rem; font-style: italic; color: #666;">
+                                    Sample qualitative results on image-question pairs from Encyclopedic-VQA (top row)
+                                    and InfoSeek (bottom row), where we compare the answers provided by ReflectiVA with
+                                    those from WikiLLaVA and EchoSight.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="section-conclusion py-5"
+        style="background: linear-gradient(135deg, #ffffff, #f0f3f6); position: relative; padding: 4rem 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 animate-on-scroll">
+                    <h2 class="section-title">Conclusion</h2>
+                    <div class="conclusion-box"
+                        style="background-color: white; border-radius: 15px; padding: 2rem; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden; border-left: 4px solid var(--secondary-color);">
+                        <p>
+                            We proposed ReflectiVA, a multimodal LLM with retrieval-augmented generation. Our method
+                            employs reflective tokens, trained in a two-stage two-model pipeline. Extensive experiments,
+                            conducted on both VQA datasets requiring external knowledge and standard datasets,
+                            demonstrate the efficacy of the proposed solution.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4 bg-dark text-white">
+        <div class="container text-center">
+            <p>&copy; 2025 - Augmenting Multimodal LLMs with Self-Reflective Tokens for Knowledge-based Visual Question
+                Answering</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+            function checkVisibility() {
+                animateElements.forEach(element => {
+                    const position = element.getBoundingClientRect();
+
+                    if (position.top < window.innerHeight && position.bottom >= 0) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+
+            checkVisibility();
+
+            window.addEventListener('scroll', checkVisibility);
+            const particlesContainer = document.querySelector('.hero-particles');
+            const particleCount = 15;
+
+            for (let i = 0; i < particleCount; i++) {
+                const size = Math.floor(Math.random() * 50) + 10;
+                const particle = document.createElement('span');
+                particle.classList.add('particle');
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.opacity = `${Math.random() * 0.5 + 0.1}`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+
+                particlesContainer.appendChild(particle);
+            }
+
+            const copyButton = document.querySelector('.copy-button');
+            if (copyButton) {
+                copyButton.addEventListener('click', function () {
+                    const citation = document.querySelector('.citation-box pre').textContent;
+                    navigator.clipboard.writeText(citation).then(function () {
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
