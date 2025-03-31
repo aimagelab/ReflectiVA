@@ -73,12 +73,12 @@ You can use this [link](https://ailb-web.ing.unimore.it/publicfiles/drive/reflec
 #### Data Encyclopedic-VQA
 You can find the evaluation data for Encyclopedic-VQA at this [link](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/data_evqa.zip). Additionally, the images used for evaluation can be extracted from this [zip file](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/evqa_inference_images.zip).
 
-## Knowledge Based
-In our work two different main knowledge based are utilized.
+## Knowledge Bases and Reproducibility
+In our work two different main knowledge bases are utilized.
 To enhance the reproducibility of our approach, we provide access to both the knowledge bases and the FAISS index built on them for the best configuration presented in the paper. Specifically, the embeddings are generated using the [EVA-CLIP](https://huggingface.co/BAAI/EVA-CLIP-8B) model.
 
-For Infoseek, you can find the [index](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/index/infoseek_EVA_text_summary/knn.index) and [json](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/index/infoseek_EVA_text_summary/knn.json) file here.
-Similarly, the [index](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/index/evqa_EVA_image/knn.index) and [json](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/index/evqa_EVA_image/knn.json) file for Encyclopedic-VQA are available here.
+For Infoseek, you can find the index and json file inside this [zip file](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/index/infoseek_EVA_text_summary.zip).
+Similarly, the index and json file for Encyclopedic-VQA are available [here](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/index/evqa_EVA_image.zip).
 
 Please refer to the paper to more information about KB. 
 <!-- Please refer to the [KB page](KNOWLEDGE_BASED.md) to find all the details. -->
