@@ -26,9 +26,11 @@ This repository contains the reference code for the paper [Augmenting Multimodal
 2. [Overview](#overview)
 3. [Installation](#installation)
 4. [Model](#model)
-5. [Knowledge Based](#knowledge-based)
-6. [Inference](#inference)
-7. [Acknowledgements](#acknowledgements)
+5. [Dataset](#dataset)
+6. [Training](#training)
+7. [Knowledge Based](#knowledge-based)
+8. [Inference](#inference)
+9. [Acknowledgements](#acknowledgements)
 
 ## Citation
 
@@ -67,11 +69,29 @@ You can access the official model weights for the [ReflectiVA model](https://hug
 ## Dataset
 The official [training dataset](https://huggingface.co/datasets/aimagelab/ReflectiVA-Data) can be accessed on 🤗 Hugging Face.
 
+```
+cd <data_local_path>
+!pip install huggingface_hub
+
+python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id="aimagelab/ReflectiVA-Data", repo_type="dataset", local_dir="<data_local_path>")"
+```
+Please note that the JSON file includes only the relative paths to the images. To access the actual images, you’ll need to download them from their original sources: [infoseek](https://github.com/open-vision-language/infoseek?tab=readme-ov-file#infoseek-images), [encycopedic](https://github.com/google-research/google-research/tree/master/encyclopedic_vqa) and [llava](https://github.com/haotian-liu/LLaVA?tab=readme-ov-file#visual-instruction-tuning).  
+
 #### Data Infoseek
 You can use this [link](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/data_infoseek.zip) to download the evaluation data for Infoseek.
 
 #### Data Encyclopedic-VQA
 You can find the evaluation data for Encyclopedic-VQA at this [link](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/data_evqa.zip). Additionally, the images used for evaluation can be extracted from this [zip file](https://ailb-web.ing.unimore.it/publicfiles/drive/reflectiva/evqa_inference_images.zip).
+
+## Training
+
+Before starting the training of `ReflectiVA`, make sure to set up the environment and download the dataset to your local machine. Additionally, update the absolute paths in the functions starting with `fill_abs_path` to correctly point to the image locations in your configuration.
+Once everything is set up, you can launch the training job using the following command:
+
+```
+cd ./ReflectivA
+bash scripts/train_reflectiva.sh
+```
 
 ## Knowledge Bases and Reproducibility
 In our work two different main knowledge bases are utilized.

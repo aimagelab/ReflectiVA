@@ -16,6 +16,7 @@
 import os
 import json
 import warnings
+import shutil
 
 from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig, BitsAndBytesConfig
 import torch
@@ -47,6 +48,7 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
         kwargs['attn_implementation'] = 'flash_attention_2'
 
     if 'llava' in model_name.lower():
+        # Load LLaVA model
         if 'lora' in model_name.lower() and model_base is None:
             warnings.warn('There is `lora` in model name but no `model_base` is provided. If you are loading a LoRA model, please provide the `model_base` argument. Detailed instruction: https://github.com/haotian-liu/LLaVA#launch-a-model-worker-lora-weights-unmerged.')
             config_path = os.path.join(model_path, 'config.json')
@@ -93,22 +95,43 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
             model = model.merge_and_unload()
             print('Model is loaded...')
         elif model_base is not None:
+            # this may be mm projector only
             print('Loading LLaVA from base model...')
-            tokenizer = AutoTokenizer.from_pretrained(model_base, use_fast=False)
-            cfg_pretrained = AutoConfig.from_pretrained(model_path)
-            model = LlavaLlamaForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=cfg_pretrained, **kwargs)
+            if 'mpt' in model_name.lower():
+                if not os.path.isfile(os.path.join(model_path, 'configuration_mpt.py')):
+                    shutil.copyfile(os.path.join(model_base, 'configuration_mpt.py'), os.path.join(model_path, 'configuration_mpt.py'))
+                tokenizer = AutoTokenizer.from_pretrained(model_base, use_fast=True)
+                cfg_pretrained = AutoConfig.from_pretrained(model_path, trust_remote_code=True)
+                model = LlavaMptForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=cfg_pretrained, **kwargs)
+            else:
+                tokenizer = AutoTokenizer.from_pretrained(model_base, use_fast=False)
+                cfg_pretrained = AutoConfig.from_pretrained(model_path)
+                model = LlavaLlamaForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=cfg_pretrained, **kwargs)
 
             mm_projector_weights = torch.load(os.path.join(model_path, 'mm_projector.bin'), map_location='cpu')
             mm_projector_weights = {k: v.to(torch.float16) for k, v in mm_projector_weights.items()}
             model.load_state_dict(mm_projector_weights, strict=False)
-        else:               
-            tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
-            model = LlavaLlamaForCausalLM.from_pretrained(
-                model_path,
-                low_cpu_mem_usage=True,
-                **kwargs
-            )
+        else:
+            if 'mpt' in model_name.lower():
+                tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=True)
+                model = LlavaMptForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, **kwargs)
+            elif 'mistral' in model_name.lower():
+                tokenizer = AutoTokenizer.from_pretrained(model_path)
+                model = LlavaMistralForCausalLM.from_pretrained(
+                    model_path,
+                    low_cpu_mem_usage=True,
+                    **kwargs
+                )
+            else:
+                # some old checkpoints may not have the siglip parameter in configuration file                
+                tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
+                model = LlavaLlamaForCausalLM.from_pretrained(
+                    model_path,
+                    low_cpu_mem_usage=True,
+                    **kwargs
+                )
     else:
+        # Load language model
         if model_base is not None:
             # PEFT model
             from peft import PeftModel
@@ -121,8 +144,13 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
             print('Convert to FP16...')
             model.to(torch.float16)
         else:
-            tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
-            model = AutoModelForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, **kwargs)
+            use_fast = False
+            if 'mpt' in model_name.lower():
+                tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=True)
+                model = AutoModelForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, trust_remote_code=True, **kwargs)
+            else:
+                tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
+                model = AutoModelForCausalLM.from_pretrained(model_path, low_cpu_mem_usage=True, **kwargs)
 
     image_processor = None
 
@@ -135,6 +163,26 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
             tokenizer.add_tokens([DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN], special_tokens=True)
         model.resize_token_embeddings(len(tokenizer))
 
+        # # RE-CONTROL THE IF STATEMENT select the correct class, considering also S2
+        # if 'siglip' in model.config.mm_vision_tower and hasattr(model.config, 's2'):
+        #     # change the args for the new class
+        #     from llava.model.multimodal_encoder.builder import SigLIPVisionTowerS2
+        #     vision_tower = SigLIPVisionTowerS2('google/siglip-so400m-patch14-384', args=model.config)
+        #     model.model.vision_tower = vision_tower.vision_tower
+
+        # elif 'siglip' in model.config.mm_vision_tower:
+        #     from llava.model.multimodal_encoder.builder import SigLIPVisionTower
+        #     vision_tower= SigLIPVisionTower('google/siglip-so400m-patch14-384', args=model.config)
+        #     vision_tower.to("cuda", dtype=torch.float16)
+        #     model.model.vision_tower = vision_tower.vision_tower
+
+        # else:
+        #     if hasattr(model.config, 's2'): # and on work
+        #         from llava.model.multimodal_encoder.builder import CLIPVisionTowerS2
+        #         vision_tower= CLIPVisionTowerS2('google/siglip-so400m-patch14-384', args=model.config)
+        #         model.model.vision_tower = vision_tower.vision_tower
+        #     else:
+        #         vision_tower = model.get_vision_tower()
         vision_tower = model.get_vision_tower()
 
         if not vision_tower.is_loaded:
